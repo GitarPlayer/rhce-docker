@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  node1:
+    build: .
+    container_name: node1
+    ports:
+      - "22"
+      - "25"
+      - "443"
+      - "80"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    tmpfs: /run
+    privileged: true
+  node2:
+    build: .
+    container_name: node2
+    ports:
+      - "22"
+      - "25"
+      - "443"
+      - "80"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    tmpfs: /run
+    privileged: true
+  ansible:
+    container_name: ansible
+    image: almalinux/8-init
+    volumes:
+      - config-data:/home/rhce
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    tmpfs: /run
+    privileged: true
+volumes:
+  config-data:
