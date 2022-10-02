@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: generate needed ssh-key pair and move it to the right folder
+        run: ssh-keygen -f $PWD/id_ra -q -N "" && mv id_rsa ansible-controller && mv id_rsa.pub ansible-nodes
       - name: Build the stack
         run: docker-compose up -d
       - name: Test ansible ping command as ansible user
