@@ -1,4 +1,4 @@
-![e2e workflow](https://github.com/GitarPlayer/rhce-docker/blob/main/.github/workflows/push.yml)
+![e2e workflow](https://github.com/GitarPlayer/rhce-docker/blob/main/.github/workflows/push.yml/badge.svg)
 # rhce-docker
 This repo contains a lightweight docker-compose file in order to practice Ansible. It contains:
 - on ansible-controller with ansible 2.9 installed and a working inventory file.
