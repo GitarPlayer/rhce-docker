@@ -5,8 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: debug PWD 
-        run: echo $PWD && ls -lart .
       - name: generate needed ssh-key pair and move it to the right folder
         run: ssh-keygen -f $PWD/id_rsa -q -N "" && mv $PWD/id_rsa ansible-controller && mv $PWD/id_rsa.pub ansible-nodes
       - name: Build the stack
