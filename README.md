@@ -50,14 +50,6 @@ tux@tux-supercomputer:~/Documents/rhce-docker$ docker-compose --version
 docker-compose version 1.25.0, build unknown
 ```
 # Usage
-The real problem is distributing the ssh pub key to the nodes dynamically. Because the ansible-controller container can only make use of the docker DNS once it is up. Things I considered:
-1. Seed the ssh keys to make distribution easier (not possible with ssh-keygen)
-2. Use a shared volume that contains the ssh keypair (the mount is only available when the service is up, so additional complexity and it stills need a docker-compose run cmd)
-3. Configure the containers with the Dockerfile that an ansible ad-hoc authorized_key docker-compose run distributes the key
-4. create ssh-keygen before docker-compose up and add the keys with the docker ADD instruction.
-
-I tried 3 and it worked but it's ugly to run such a long docker-compose run cmd. 4 is the best compromise since most OS include ssh-keygen and you only need to run it the first time. Then you can just tear down your containers and recreate it withouth having to remember a complicated docker-compose run command.
-
 ```bash
 ssh-keygen -f $PWD/id_rsa
 # The <src> path must be inside the context of the build; you cannot ADD ../something /something, because the first step of a docker build is to send the context directory (and subdirectories) to the docker daemon. from https://docs.docker.com/engine/reference/builder/
