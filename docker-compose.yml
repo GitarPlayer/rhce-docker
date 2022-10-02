@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   node1:
-    build: .
+    build: ansible-nodes/
     container_name: node1
     ports:
       - "22"
@@ -11,9 +11,14 @@ services:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
     tmpfs: /run
+    healthcheck:
+        test: ["CMD", "systemctl", "is-active", "sshd.service"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
     privileged: true
   node2:
-    build: .
+    build: ansible-nodes/
     container_name: node2
     ports:
       - "22"
@@ -23,14 +28,20 @@ services:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
     tmpfs: /run
+    healthcheck:
+        test: ["CMD", "systemctl", "is-active", "sshd.service"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
     privileged: true
   ansible:
     container_name: ansible
-    build: .
+    build: ansible-controller/
     volumes:
       - config-data:/home/rhce
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    tmpfs: /run
+    depends_on:
+      - node1
+      - node2
     privileged: true
 volumes:
   config-data:

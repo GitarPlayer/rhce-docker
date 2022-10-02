@@ -1,0 +1,13 @@
+name: docker-compose-actions-workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: docker-compose up -d
+      - name: Test ansible ping command as ansible user
+        run: docker-compose run ansible ansible nodes -i inventory -m ping
+      - name: Test ansible ping command as ansible user and become root
+        run: docker-compose run ansible ansible nodes -i inventory -m ping --become
