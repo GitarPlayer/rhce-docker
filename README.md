@@ -53,6 +53,7 @@ docker-compose version 1.25.0, build unknown
 ```bash
 ssh-keygen -f $PWD/id_rsa
 # The <src> path must be inside the context of the build; you cannot ADD ../something /something, because the first step of a docker build is to send the context directory (and subdirectories) to the docker daemon. from https://docs.docker.com/engine/reference/builder/
+# this is why we have to move them 
 mv id_rsa ansible-controller/
 mv id_rsa.pub ansible-nodes/
 docker-compose up -d
@@ -90,3 +91,10 @@ ansible-galaxy collection install ansible.posix -vv
 ansible-galaxy collection list 
 ```
 
+# Good sources to learn ansible
+1. Sander van https://www.sandervanvugt.com/course/red-hat-certified-engineer-rhce-ex294-video-course-red-hat-ansible-automation/  
+Best course hands down. A really nice bloke explaining topics in an easy to understand way and his labs are harder than most I found. So you are really prepared for RHCE. You can try Oreilly's for ten days enough time to go trough the course or be convinced enough to buy it. His videos tend to be better than his books.
+2. Official RHCE EX294 course from RedHat https://www.redhat.com/en/services/training/rh294-red-hat-linux-automation-with-ansible   
+If your company is paying, go ahead. Otherwise I would not shell out the money and rather use the course above.
+3. KodeKloud Ansible Certification Course https://kodekloud.com/courses/ansible-certification-preparation-course/  
+Definitely good practice but not aligned at all with the RHCE objectives. I mainly tried it because I loved their CKA course.
