@@ -1,9 +1,14 @@
 FROM almalinux:8
 
 # install sensible packages and ansible
-RUN dnf -y install passwd centos-release-ansible-29 openssh-clients sudo tmux less iputils iproute \
+RUN dnf -y install vim passwd centos-release-ansible-29 openssh-clients sudo tmux less iputils iproute \
     net-tools NetworkManager man-pages man-db man \@python39 && \
     dnf clean all && mandb && dnf -y install ansible 
+
+# add some nice aliases
+RUN echo "alias ll='ls -l'" >> /etc/bash.bashrc && \
+    echo "alias vi='vim'" >> /etc/bash.bashrc
+
 
 # make root password redhat
 RUN echo 'redhat' | passwd --stdin root && \
