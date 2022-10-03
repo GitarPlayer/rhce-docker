@@ -1,5 +1,8 @@
 name: docker-compose-actions-workflow
-on: push
+on: 
+  push: 
+  schedule:
+    - cron: "0 0 * * 5" # run every Friday at 00:00
 jobs:
   test:
     runs-on: ubuntu-latest
