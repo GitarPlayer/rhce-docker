@@ -42,6 +42,6 @@ services:
     depends_on:
       - node1
       - node2
-    privileged: true
+    privileged: false
 volumes:
   config-data:
