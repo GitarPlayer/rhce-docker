@@ -79,8 +79,6 @@ If loading the kernel module on the container host is not possible or too cumber
 ```bash
 [root@e0ed18a82798 /]# firewall-cmd --add-service http
 Error: COMMAND_FAILED: 'python-nftables' failed: internal:0:0-0: Error: Could not process rule: No such file or directory
-
-
 JSON blob:
 {"nftables": [{"metainfo": {"json_schema_version": 1}}, {"add": {"rule": {"family": "inet", "table": "firewalld", "chain": "filter_IN_public_allow", "expr": [{"match": {"left": {"payload": {"protocol": "tcp", "field": "dport"}}, "op": "==", "right": 80}}, {"match": {"left": {"ct": {"key": "state"}}, "op": "in", "right": {"set": ["new", "untracked"]}}}, {"accept": null}]}}}]}
 [root@e0ed18a82798 /]# firewall-cmd --add-service http --permanent
@@ -110,12 +108,8 @@ The same in an ansible play:
       name: restarted      
 ```
 
-JSON blob:
-{"nftables": [{"metainfo": {"json_schema_version": 1}}, {"add": {"table": {"family": "inet", "name": "firewalld_policy_drop"}}}, {"add": {"chain": {"family": "inet", "table": "firewalld_policy_drop", "name": "filter_input", "type": "filter",
-"hook": "input", "prio": 9, "policy": "drop"}}}, {"add": {"chain": {"family": "inet", "table": "firewalld_policy_drop", "name": "filter_forward", "type": "filter", "hook": "forward", "prio": 9, "policy": "drop"}}}, {"add": {"chain": {"family": "inet", "table": "firewalld_policy_drop", "name": "filter_output", "type": "filter", "hook": "output", "prio": 9, "policy": "drop"}}}, {"add": {"rule": {"family": "inet", "table": "firewalld_policy_drop", "chain": "filter_input", "expr": [{"match": {"left": {"ct": {"key": "state"}}, "op": "in", "right": {"set": ["established", "related"]}}}, {"accept": null}]}}}, {"add": {"rule": {"family": "inet", "table": "firewalld_policy_drop", "chain": "filter_forward", "expr": [{"match":
-{"left": {"ct": {"key": "state"}}, "op": "in", "right": {"set": ["established", "related"]}}}, {"accept": null}]}}}, {"add": {"rule": {"family": "inet", "table": "firewalld_policy_drop", "chain": "filter_output", "expr": [{"match": {"left": {"ct": {"key": "state"}}, "op": "in", "right": {"set": ["established", "related"]}}}, {"accept": null}]}}}]}
 
-```
+
 
 # How to install ansible (quick summary)
 ## Install ansible via package manager (for all users)
